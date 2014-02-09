@@ -14,16 +14,16 @@
       <h1>Paginated</h1>
       <p>At the bottom are some previous and next buttons. You can see in the HTML that they are called like <code>loadPage(N)</code> where <code>N</code> is a pagination offset. You'll need to handle disabling buttons on your own, see the HTML in this demo for an example.</p>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Any text will do..." ng-model="dataSearch.params.username">
+        <input type="text" class="form-control" placeholder="Any text will do..." ng-model="queryParams.username">
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button" ng-click="dataSearch.search()">Go!</button>
+          <button class="btn btn-default" type="button" ng-click="search.search()">Go!</button>
         </span>
       </div>
     </div>
 
     <div class="container">
       <ul>
-        <li ng-repeat='item in dataSearch.items'>
+        <li ng-repeat='item in search.items'>
           <h1>{{item.name}} <small>{{item.count}}</small></h1>
           <span class='subject'>{{item.subject}}</span>
           <span>{{item.data}}</span>
@@ -31,10 +31,10 @@
       </ul>
 
       <div>
-        <p ng-show='dataSearch.busy'>Loading data...</p>
-        <p ng-show='!dataSearch.busy && dataSearch.items.length > 0'>
-          <button type="button" class="btn btn-default" ng-disabled="dataSearch.position.start == 0" ng-click="dataSearch.loadPage(-1)">Previous Page</button>
-          <button type="button" class="btn btn-default" ng-click="dataSearch.loadPage(+1)">Next Page</button>
+        <p ng-show='search.busy'>Loading data...</p>
+        <p ng-show='!search.busy && search.items.length > 0'>
+          <button type="button" class="btn btn-default" ng-disabled="search.position.start == 0" ng-click="search.loadPage(-1)">Previous Page</button>
+          <button type="button" class="btn btn-default" ng-click="search.loadPage(+1)">Next Page</button>
         </p>
       </div>
     </div>
@@ -44,7 +44,7 @@
     <script src="./jquery.min.js"></script>
     <script src="./angular.min.js"></script>
     <script src="../ng-infinite-scroll.min.js"></script>
-    <script src="../ng-data-search.js"></script>
+    <script src="../ng-infinisearch.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

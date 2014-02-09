@@ -16,14 +16,14 @@
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Any text will do..." ng-model="queryParams.username">
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button" ng-click="dataSearch.search()">Go!</button>
+          <button class="btn btn-default" type="button" ng-click="search.search()">Go!</button>
         </span>
       </div>
     </div>
 
     <div class="container">
-      <ul infinite-scroll='dataSearch.loadMore()' infinite-scroll-disabled='dataSearch.busy' infinite-scroll-distance='1'>
-        <li ng-repeat='item in dataSearch.items'>
+      <ul infinite-scroll='search.loadMore()' infinite-scroll-disabled='search.busy' infinite-scroll-distance='1'>
+        <li ng-repeat='item in search.items'>
           <h1>{{item.name}} <small>{{item.count}}</small></h1>
           <span class='subject'>{{item.subject}}</span>
           <span>{{item.data}}</span>
@@ -31,7 +31,7 @@
       </ul>
 
       <div>
-        <p ng-show='dataSearch.busy'>Loading data...</p>
+        <p ng-show='search.busy'>Loading data...</p>
       </div>
     </div>
 
@@ -40,7 +40,7 @@
     <script src="./jquery.min.js"></script>
     <script src="./angular.min.js"></script>
     <script src="../ng-infinite-scroll.min.js"></script>
-    <script src="../ng-data-search.js"></script>
+    <script src="../ng-infinisearch.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

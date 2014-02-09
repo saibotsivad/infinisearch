@@ -29,10 +29,10 @@ Pagination (multi-page, not auto loading):
 
 */
 
-var module = angular.module('data-search', ['infinite-scroll']);
+var module = angular.module('infinisearch', ['infinite-scroll']);
 
-module.factory('DataSearch', function($http) {
-  var DataSearch = function(opts) {
+module.factory('InfiniSearch', function($http) {
+  var InfiniSearch = function(opts) {
     this.opts = opts;
     this.position = {
       start: 0,
@@ -43,7 +43,7 @@ module.factory('DataSearch', function($http) {
     this.firstSearchRan = false;
   };
 
-  DataSearch.prototype.queryData = function(page) {
+  InfiniSearch.prototype.queryData = function(page) {
     if (this.busy) return;
     this.busy = true;
 
@@ -53,16 +53,18 @@ module.factory('DataSearch', function($http) {
       end: this.position.end
     }
     $http
-      .get(this.opts.url, this.opts.prepare(current))
-      .success(function(data) {
+      .get(
+        typeof this.opts.url === 'function' ? this.opts.url(current) : this.opts.url,
+        typeof this.opts.config === 'function' ? this.opts.config(current) : undefined)
+      .success(function(data, status, headers, config) {
         if (page !== undefined) {
           this.items = [];
         }
         var output = [];
         if (typeof this.opts.success === 'function') {
-          this.opts.success(current, data, function(result) {
+          this.opts.success(current, function(result) {
             output.push(result);
-          })
+          }, data, status, headers, config);
         } else {
           output = data;
         }
@@ -75,20 +77,24 @@ module.factory('DataSearch', function($http) {
           this.position.end = this.position.end + output.length * page;
           this.position.start = this.position.start + output.length * page;
         }
-        console.log(this.position);
         this.busy = false;
-      }.bind(this));
+      }.bind(this))
+      .error(function(data, status, headers, config) {
+        if (typeof this.opts.error === 'function') {
+          this.opts.error(params, data, status, headers, config);
+        }
+      });
   }
 
-  DataSearch.prototype.loadMore = function() {
+  InfiniSearch.prototype.loadMore = function() {
     this.queryData();
   };
 
-  DataSearch.prototype.loadPage = function(page) {
+  InfiniSearch.prototype.loadPage = function(page) {
     this.queryData(page);
   };
 
-  DataSearch.prototype.search = function() {
+  InfiniSearch.prototype.search = function() {
     this.firstSearchRan = true;
     this.items = [];
     this.position.start = 0;
@@ -96,5 +102,5 @@ module.factory('DataSearch', function($http) {
     this.queryData();
   }
 
-  return DataSearch;
+  return InfiniSearch;
 })
