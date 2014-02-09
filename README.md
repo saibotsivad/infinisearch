@@ -1,8 +1,11 @@
 infinisearch
 ============
 
-Opinionated use of AngularJS and infinite-scroll to paginate
+Mildly opinionated AngularJS module to paginate
 or infinite scroll arbitrary $http.get() sources.
+
+Uses the exceptionally handy [infinite-scroll](http://binarymuse.github.io/ngInfiniteScroll/)
+module to handle auto loading.
 
 See demos, but here's the basic gist of it all:
 
