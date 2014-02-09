@@ -8,12 +8,13 @@
   </head>
   <body>
 
-  <div ng-app='data-search' ng-controller='DataSearchController'>
+  <div ng-app='demo-app' ng-controller='DemoController'>
 
     <div class="container">
-      <h1>Search:</h1>
+      <h1>Default Search</h1>
+      <p>This demonstrates the automatic loading, if a default search is used. Inside the <code>prepare</code> function, simply define some default search parameters. A query placed here will override those parameters and start a new search.</p>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="..." ng-model="dataSearch.params.username">
+        <input type="text" class="form-control" placeholder="Any text will do..." ng-model="queryParams.username">
         <span class="input-group-btn">
           <button class="btn btn-default" type="button" ng-click="dataSearch.search()">Go!</button>
         </span>
@@ -21,7 +22,7 @@
     </div>
 
     <div class="container">
-      <ul infinite-scroll='dataSearch.loadNextPage()' infinite-scroll-disabled='true || dataSearch.busy || !dataSearch.firstSearchRan' infinite-scroll-distance='1'>
+      <ul infinite-scroll='dataSearch.loadMore()' infinite-scroll-disabled='dataSearch.busy' infinite-scroll-distance='1'>
         <li ng-repeat='item in dataSearch.items'>
           <h1>{{item.name}} <small>{{item.count}}</small></h1>
           <span class='subject'>{{item.subject}}</span>
@@ -31,10 +32,6 @@
 
       <div>
         <p ng-show='dataSearch.busy'>Loading data...</p>
-        <p ng-show='!dataSearch.busy && dataSearch.items.length > 0'>
-          <!-- <button type="button" class="btn btn-default" ng-click="dataSearch.loadPage(-1)">Previous Page</button> -->
-          <button type="button" class="btn btn-default" ng-click="dataSearch.loadNextPage()">Next Page</button>
-        </p>
       </div>
     </div>
 
@@ -42,7 +39,8 @@
 
     <script src="./jquery.min.js"></script>
     <script src="./angular.min.js"></script>
-    <script src="./ng-infinite-scroll.min.js"></script>
+    <script src="../ng-infinite-scroll.min.js"></script>
+    <script src="../ng-data-search.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

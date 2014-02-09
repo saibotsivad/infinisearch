@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Angular Tests</title>
+    <link href="./bootstrap.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+  </head>
+  <body>
+
+  <div ng-app='demo-app' ng-controller='DemoController'>
+
+    <div class="container">
+      <h1>Button Loading</h1>
+      <p>All data is appended, but instead of auto-loading you need to click "Load More".</p>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Any text will do..." ng-model="dataSearch.params.username">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="dataSearch.search()">Go!</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="container">
+      <ul infinite-scroll='dataSearch.loadMore()' infinite-scroll-disabled='true || dataSearch.busy || !dataSearch.firstSearchRan' infinite-scroll-distance='1'>
+        <li ng-repeat='item in dataSearch.items'>
+          <h1>{{item.name}} <small>{{item.count}}</small></h1>
+          <span class='subject'>{{item.subject}}</span>
+          <span>{{item.data}}</span>
+        </li>
+      </ul>
+
+      <div>
+        <p ng-show='dataSearch.busy'>Loading data...</p>
+        <p ng-show='!dataSearch.busy && dataSearch.items.length > 0'>
+          <button type="button" class="btn btn-default" ng-click="dataSearch.loadMore()">Load More</button>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+    <script src="./jquery.min.js"></script>
+    <script src="./angular.min.js"></script>
+    <script src="../ng-infinite-scroll.min.js"></script>
+    <script src="../ng-data-search.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
